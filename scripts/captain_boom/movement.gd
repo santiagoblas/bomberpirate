@@ -4,7 +4,7 @@ class_name CaptainMovement
 
 const MIN_SPEED:float = 10
 const MAX_SPEED:float = 200.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -250.0
 
 
 @export var _CAPTAIN:CaptainBoom
@@ -30,11 +30,10 @@ func _physics_process(delta):
 	if not _CAPTAIN.is_on_floor():
 		_CAPTAIN.velocity.y += _gravity
 	
+	# knockback
 	if _knockback_push != Vector2.ZERO:
 		_CAPTAIN.velocity = _knockback_push
-		_knockback_push *= .9
-		if abs(_knockback_push.x) < 20: 
-			_knockback_push = Vector2.ZERO
+		_knockback_push = _knockback_push.move_toward(Vector2.ZERO,delta * 600)
 		_CAPTAIN.move_and_slide()
 		return
 	
