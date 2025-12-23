@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6qylqdug36sf"]
+
+[ext_resource type="TileSet" uid="uid://ctu7nw8r8yrxx" path="res://sprites/tilemaps/platforms.tres" id="1_y1ghj"]
+
+[node name="Game" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Platforms" type="TileMapLayer" parent="World"]
+tile_set = ExtResource("1_y1ghj")

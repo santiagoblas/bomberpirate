@@ -13,3 +13,10 @@ config_version=5
 config/name="bomberpirate"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[file_customization]
+
+folder_colors={
+"res://scenes/": "green",
+"res://sprites/": "pink"
+}
