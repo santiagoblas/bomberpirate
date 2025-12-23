@@ -1,7 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://b20kwfs5k2uh4"]
+[gd_scene load_steps=27 format=3 uid="uid://b20kwfs5k2uh4"]
 
 [ext_resource type="Script" uid="uid://s44fmtv334m5" path="res://scripts/captain_boom/captain_boom.gd" id="1_l820b"]
+[ext_resource type="Script" uid="uid://uoq1qxjif0a0" path="res://scripts/captain_boom/health.gd" id="2_ch2ba"]
 [ext_resource type="Texture2D" uid="uid://chg61fnqx4gac" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/01-Idle/Idle 01.png" id="2_oi0kf"]
+[ext_resource type="Script" uid="uid://dwlocco44yk46" path="res://scripts/captain_boom/movement.gd" id="3_g3xrm"]
 [ext_resource type="Texture2D" uid="uid://0on7q1la436o" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/01-Idle/Idle 02.png" id="3_hsfqc"]
 [ext_resource type="Texture2D" uid="uid://d23d2gauictpw" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/01-Idle/Idle 03.png" id="4_0qsgv"]
 [ext_resource type="Texture2D" uid="uid://cd77cljmv1vk2" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/01-Idle/Idle 04.png" id="5_dw5j2"]
@@ -117,6 +119,16 @@ radius = 8.0
 collision_mask = 768
 script = ExtResource("1_l820b")
 
+[node name="Health" type="Node" parent="." node_paths=PackedStringArray("_CAPTAIN")]
+unique_name_in_owner = true
+script = ExtResource("2_ch2ba")
+_CAPTAIN = NodePath("..")
+
+[node name="Movement" type="Node" parent="." node_paths=PackedStringArray("_CAPTAIN")]
+unique_name_in_owner = true
+script = ExtResource("3_g3xrm")
+_CAPTAIN = NodePath("..")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_iywne")
 
@@ -130,7 +142,7 @@ libraries = {
 
 [node name="DamageDetection" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 1024
+collision_mask = 1040
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetection"]
@@ -138,3 +150,5 @@ position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_e732p")
 
 [connection signal="area_entered" from="DamageDetection" to="." method="_on_damage_detection_area_entered"]
+[connection signal="area_entered" from="DamageDetection" to="Health" method="_on_damage_detection_area_entered"]
+[connection signal="body_entered" from="DamageDetection" to="Health" method="_on_damage_detection_body_entered"]

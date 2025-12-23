@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://b6qylqdug36sf"]
+[gd_scene load_steps=8 format=4 uid="uid://b6qylqdug36sf"]
 
 [ext_resource type="TileSet" uid="uid://ctu7nw8r8yrxx" path="res://sprites/tilemaps/island.tres" id="1_y1ghj"]
 [ext_resource type="TileSet" uid="uid://b3rw08np7rivp" path="res://sprites/tilemaps/platform.tres" id="2_iywne"]
 [ext_resource type="Texture2D" uid="uid://daokfajf53p26" path="res://sprites/Treasure Hunters/Palm Tree Island/Sprites/Background/BG Image.png" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://b20kwfs5k2uh4" path="res://scenes/captain_boom/captain_boom.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bacv85h0si4qv" path="res://scenes/items/coin.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://gcbedhqsvfqn" path="res://scenes/enemies/enemy.tscn" id="6_p57ef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
 size = Vector2(1200, 20)
@@ -68,3 +69,8 @@ position = Vector2(539, 186)
 
 [node name="Coin3" parent="Items" instance=ExtResource("5_iywne")]
 position = Vector2(573, 186)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("6_p57ef")]
+position = Vector2(171, 273)
