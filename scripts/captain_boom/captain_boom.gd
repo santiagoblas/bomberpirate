@@ -4,9 +4,9 @@ extends CharacterBody2D
 const SPEED = 200.0
 const MIN_SPEED = 10
 const JUMP_VELOCITY = -400.0
+const LAYER_PLATFORM = 9
 
 
-# Reordenamos las variables
 var _direction:float = 0
 var _speed:float = 0
 var _gravity:float = 10
@@ -28,15 +28,12 @@ func _input(event:InputEvent):
 		_jump_down()
 
 
-# Los comentarios se encuentran en la rama 2-ANIMACIONES
 func _process(delta):
 	var is_on_floor:bool = is_on_floor()
 	
 	if not is_on_floor and velocity.y > 0:
 		$AnimationPlayer.play("fall")
-		
-		# Devuelvo la colision al layer 9
-		set_collision_mask_value(9, true)
+		set_collision_mask_value(LAYER_PLATFORM, true)
 	
 	if is_on_floor and _speed < 50 and _direction == 0:
 		$AnimationPlayer.play("idle")
@@ -56,7 +53,6 @@ func _movement(delta):
 	
 	if _direction == 0 and is_on_floor():
 		_speed -= sign(_speed) * 20
-		# Cambio la velocidad mínima y la llevo a una constante
 		if abs(_speed) <= MIN_SPEED:
 			_speed = 0
 		velocity.x = _speed
@@ -73,23 +69,16 @@ func _jump():
 	velocity.y += JUMP_VELOCITY
 	$AnimationPlayer.play("jump")
 	
-	# Quito la colision con layer 9 para poder atravesar plataformas yendo hacia arriba
-	set_collision_mask_value(9, false)
+	set_collision_mask_value(LAYER_PLATFORM, false)
 
 
 func _jump_down():
-	# Quitamos temporalmente la colisión con las plataformas
-	set_collision_mask_value(9, false)
-	# Obtenemos el arbol de la escena, creamos un timer de .5s, y con await esperamos por el evento timeout (cuando termina el timer)
+	set_collision_mask_value(LAYER_PLATFORM, false)
 	
 	$AnimationPlayer.play("fall")
 	
 	await get_tree().create_timer(.5).timeout
-	# Otra forma sería tener un nodo Timer en la escena, en otro tutorial se incluirá
-	
-	# Luego del timer recuperamos la colisión con la layer de plataformas
-	set_collision_mask_value(9, true)
-	#ALERT PRO TIP: podemos tener una constante el número de layer
+	set_collision_mask_value(LAYER_PLATFORM, true)
 
 
 func _respawn():
