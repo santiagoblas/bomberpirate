@@ -2,12 +2,11 @@ extends Node
 class_name CaptainHealth
 
 
+#Los comentarios están en rama 5-ENEMIGO-Y-DANIO
 var _hp = 10
-# Una referencia al capitán
 @export var _CAPTAIN:CaptainBoom
 
 
-# Esta función es fácil de entender 😉
 func _take_damage(damage:int):
 	_hp -= damage
 	
@@ -17,7 +16,6 @@ func _take_damage(damage:int):
 
 
 func _die():
-	# Borramos al pj. Por ahora...
 	get_parent().queue_free()
 
 
@@ -26,13 +24,11 @@ func _respawn():
 
 
 func _on_damage_detection_area_entered(area:Area2D):
-	# La layer del área es 11 (FreeFall)?
 	if area.get_collision_layer_value(11):
 		_respawn()
 
 
 func _on_damage_detection_body_entered(body:PhysicsBody2D):
-	# La layer del body es 5 (Enemy)?
 	if body.get_collision_layer_value(5):
 		_take_damage(1)
 		%Movement._knockback(body.global_position)
