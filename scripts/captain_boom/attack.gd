@@ -2,7 +2,7 @@ extends Node
 class_name CaptainAttack
 
 
-var _has_control:bool = false #ALERT Ver PRO TIP en Health
+var _has_control:bool = false #Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 var _can_attack:bool = true
 
 
@@ -13,7 +13,7 @@ func _input(event):
 		_has_control = true
 		
 		%AnimationPlayer.play("attack_1")
-		#ALERT Ver PRO TIP en Health
+		#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 		%AnimationPlayer.animation_finished.connect(_on_animation_finished)
 		
 		#Cooldown para evitar ataques muy seguidos
@@ -34,6 +34,6 @@ func _on_cooldown_timeout():
 # Esta función será llamada cuando el AnimationPlayer termine con su animación actual.
 # (Siempre que esté conectada a la señal)
 func _on_animation_finished(animation_name:String):
-	#ALERT Ver PRO TIP en Health
+	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	_has_control = false
 	%AnimationPlayer.animation_finished.disconnect(_on_animation_finished)

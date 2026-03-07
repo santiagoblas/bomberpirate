@@ -2,11 +2,11 @@ extends Node
 class_name EnemyHealth
 
 
-# Para acceder con facilidad al parent
 @export var _ENEMY:Enemy
-#ALERT PRO TIP: Como voy a tener muchos enemigos, probablemente quiera cambiarle la vida que cada uno va a tener, entonces usamos max hp para luego en _ready cargar el valor en hp
+#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 @export var _max_hp:int = 3
 var _hp:int = 0
+var _has_control:bool = false
 
 
 func _ready():
@@ -28,9 +28,10 @@ func _die():
 
 func _on_damage_detection_area_entered(area):
 	_take_damage(1)
+	_has_control = true
 	# Reproducimos la animación de daño y esperamos su finalización para volver a idle
 	%AnimationPlayer.play("hit")
-	#ALERT PRO TIP: Luego de await colocamos una señal y el código ESPERARÁ AQUÍ hasta que esa señal sea enviada
+	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	await %AnimationPlayer.animation_finished
+	_has_control = false
 	%AnimationPlayer.play("idle")
-	# Recordar que para utilizar % hay que configurarlo desde Scene, haciendo click sobre el nodo e indicándole que queremos activar el nombre único sobre ese nodo.

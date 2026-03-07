@@ -3,7 +3,7 @@ class_name CaptainMovement
 
 
 const MIN_SPEED:float = 10
-const MAX_SPEED:float = 200.0
+const MAX_SPEED:float = 150.0
 const JUMP_VELOCITY = -250.0
 
 
@@ -16,6 +16,10 @@ var _knockback_push:Vector2 = Vector2.ZERO
 
 
 func _input(event:InputEvent):
+	if (%Attack._has_control and _CAPTAIN.is_on_floor()) or %Health._has_control:
+		_direction = 0
+		return
+	
 	if event.is_action("move_left") or event.is_action("move_right"):
 		_direction = Input.get_axis("move_left", "move_right")
 	

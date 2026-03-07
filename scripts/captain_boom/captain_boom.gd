@@ -5,10 +5,24 @@ class_name CaptainBoom
 const LAYER_PLATFORM:int = 9
 
 
+# Variable estática para singleton
+static var _instance:CaptainBoom
+
+
 @export var _respawn_point:Marker2D
 
 
+#ALERT PRO TIP: Singleton en godot
+func _enter_tree():
+	if _instance != null:
+		free()
+	_instance = self
+
+
 func _input(event:InputEvent):
+	if %Attack._has_control or %Health._has_control:
+		return
+	
 	if event.is_action("move_left") or event.is_action("move_right"):
 		var direction = Input.get_axis("move_left", "move_right")
 		if direction != 0:
@@ -24,7 +38,7 @@ func _process(delta):
 func _idle_animations():
 	var is_on_floor:bool = is_on_floor()
 	
-	#ALERT Ver PRO TIP en Health
+	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	if %Attack._has_control or %Health._has_control:
 		return
 	

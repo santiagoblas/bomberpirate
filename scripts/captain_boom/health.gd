@@ -4,7 +4,7 @@ class_name CaptainHealth
 
 #Los comentarios están en rama 5-ENEMIGO-Y-DANIO
 @export var _CAPTAIN:CaptainBoom
-#ALERT PRO TIP Vamos a usar has control para indicar que se está finalizando una acción y este script controla al capitán momentáneamente. 
+#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 var _has_control:bool
 var _hp = 10
 
@@ -13,7 +13,7 @@ func _take_damage(damage:int):
 	_has_control = true
 	
 	%AnimationPlayer.play("hit")
-	#ALERT PRO TIP: Conecto la señal de animación finalizada solo cuando la necesito*
+	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	%AnimationPlayer.animation_finished.connect(_on_animation_finished)
 	
 	_hp -= damage
@@ -46,6 +46,5 @@ func _on_damage_detection_body_entered(body:PhysicsBody2D):
 func _on_animation_finished(animation_name):
 	_has_control = false
 	
-	#ALERT PRO TIP: *Aquí desconecto la señal que conecté arriba
-	# También podría estar la señal siempre conectada y con if _has_control sabríamos si debemos o no actuar
+	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	%AnimationPlayer.animation_finished.disconnect(_on_animation_finished)
