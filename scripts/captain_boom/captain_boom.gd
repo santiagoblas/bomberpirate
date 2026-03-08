@@ -10,6 +10,7 @@ static var _instance:CaptainBoom
 
 
 @export var _respawn_point:Marker2D
+var _dead:bool = false
 
 
 #ALERT PRO TIP: Singleton en godot
@@ -20,6 +21,9 @@ func _enter_tree():
 
 
 func _input(event:InputEvent):
+	if _dead:
+		return
+	
 	if %Attack._has_control or %Health._has_control:
 		return
 	
@@ -32,6 +36,9 @@ func _input(event:InputEvent):
 
 
 func _process(delta):
+	if _dead:
+		return
+	
 	_idle_animations()
 
 

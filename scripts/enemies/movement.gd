@@ -25,7 +25,7 @@ func _physics_process(delta):
 	if not _enemy.is_on_floor():
 		_enemy.velocity += _enemy.get_gravity() * delta
 	
-	if %Health._has_control:
+	if %Health._has_control or %Attack._has_control:
 		return
 	
 	_movement()
@@ -42,7 +42,7 @@ func _physics_process(delta):
 
 func _movement():
 	#ALERT * ... de esta manera puedo hacer una "salida rápida" con return y me ahorro una tabulación. En este caso el código es mínimo y no es demasiada diferencia, pero hay casos donde aporta claridad encapsulando mejor una funcionalidad.
-	if not _active:
+	if not _active or _enemy._dead:
 		return
 	
 	# Si vemos al capitán lo seguimos, sino patrullamos. Son bastante parecidas de todas formas
@@ -70,10 +70,10 @@ func _follow():
 		_enemy.velocity = Vector2.ZERO
 		return
 	
-	_enemy.velocity.x = _direction * SPEED
+	_enemy.velocity.x = _direction * SPEED * 1.8
 
 
 func _flip():
 	$"../Sprite2D".flip_h = not $"../Sprite2D".flip_h
-	%FloorRC.position.x *= -1
-	%SightRC.target_position.x *= -1
+	#Flipeamos un nodo entero en lugar de cada una de sus partes, útil cuando comenzamos a tener muchos detectores
+	$"../FlipComponents".scale.x *= -1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://gcbedhqsvfqn"]
+[gd_scene load_steps=46 format=3 uid="uid://gcbedhqsvfqn"]
 
 [ext_resource type="Script" uid="uid://dnl2tpc73puni" path="res://scripts/enemies/enemy.gd" id="1_f6y8w"]
 [ext_resource type="Texture2D" uid="uid://b4lobgojwhgq8" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/01-Idle/Idle 01.png" id="1_n7575"]
@@ -30,6 +30,11 @@
 [ext_resource type="Texture2D" uid="uid://dkv0rdokdii70" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/08-Hit/Hit 02.png" id="26_8ma66"]
 [ext_resource type="Texture2D" uid="uid://c7iwrpal2ms6o" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/08-Hit/Hit 03.png" id="27_emj2s"]
 [ext_resource type="Texture2D" uid="uid://c7777yil3kftk" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/08-Hit/Hit 04.png" id="28_rhg24"]
+[ext_resource type="Script" uid="uid://dbpyh4vo0dyan" path="res://scripts/enemies/attack.gd" id="31_rhg24"]
+[ext_resource type="Texture2D" uid="uid://dokrv0sbjx2ga" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 01.png" id="32_72k7o"]
+[ext_resource type="Texture2D" uid="uid://bd2oxl3xsao32" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 02.png" id="33_8jbd4"]
+[ext_resource type="Texture2D" uid="uid://chnq3ausmxjxb" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 03.png" id="34_7ob2q"]
+[ext_resource type="Texture2D" uid="uid://46js6s07nft6" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/09-Dead Hit/Dead Hit 04.png" id="35_pcnli"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gc4hx"]
 radius = 9.0
@@ -52,6 +57,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [ExtResource("1_n7575")]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipComponents/AttackArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_emj2s"]
 resource_name = "attack"
@@ -67,6 +96,45 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("15_gc4hx"), ExtResource("16_f6y8w"), ExtResource("17_y2gxb"), ExtResource("18_3xxyr"), ExtResource("19_xiois"), ExtResource("20_e4ejd"), ExtResource("21_7v5dn"), ExtResource("22_8ma66")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlipComponents/AttackArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_cgkoq"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.46666667, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("32_72k7o"), ExtResource("33_8jbd4"), ExtResource("34_7ob2q"), ExtResource("35_pcnli")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -10.0, 4.0]
 }
 
 [sub_resource type="Animation" id="Animation_xteqa"]
@@ -122,10 +190,13 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_kugq1"),
 &"attack": SubResource("Animation_emj2s"),
+&"die": SubResource("Animation_cgkoq"),
 &"hit": SubResource("Animation_xteqa"),
 &"idle": SubResource("Animation_pe3k2"),
 &"walk": SubResource("Animation_maese")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emj2s"]
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 16
@@ -140,6 +211,7 @@ shape = SubResource("CapsuleShape2D_gc4hx")
 texture = ExtResource("1_n7575")
 
 [node name="Movement" type="Node" parent="." node_paths=PackedStringArray("_enemy")]
+unique_name_in_owner = true
 script = ExtResource("5_emj2s")
 _enemy = NodePath("..")
 
@@ -149,7 +221,16 @@ script = ExtResource("24_y2gxb")
 _ENEMY = NodePath("..")
 
 [node name="Sight" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("4_8ma66")
+
+[node name="Attack" type="Node" parent="." node_paths=PackedStringArray("_ENEMY")]
+unique_name_in_owner = true
+script = ExtResource("31_rhg24")
+_ENEMY = NodePath("..")
+
+[node name="CD" type="Timer" parent="Attack"]
+wait_time = 0.5
 
 [node name="DamageDetection" type="Area2D" parent="."]
 collision_layer = 0
@@ -166,14 +247,32 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="FloorRC" type="RayCast2D" parent="."]
+[node name="FlipComponents" type="Node2D" parent="."]
+
+[node name="FloorRC" type="RayCast2D" parent="FlipComponents"]
 unique_name_in_owner = true
 position = Vector2(-10, 12)
 target_position = Vector2(0, 10)
 collision_mask = 768
 
-[node name="SightRC" type="RayCast2D" parent="."]
+[node name="SightRC" type="RayCast2D" parent="FlipComponents"]
 unique_name_in_owner = true
 target_position = Vector2(-50, 0)
 
+[node name="RangeRC" type="RayCast2D" parent="FlipComponents"]
+unique_name_in_owner = true
+target_position = Vector2(-15, 0)
+
+[node name="AttackArea" type="Area2D" parent="FlipComponents"]
+position = Vector2(-19, 0)
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipComponents/AttackArea"]
+shape = SubResource("CircleShape2D_emj2s")
+disabled = true
+debug_color = Color(0.9426476, 0.22669154, 0.21707225, 0.41960785)
+
+[connection signal="timeout" from="Attack/CD" to="Attack" method="_on_cd_timeout"]
 [connection signal="area_entered" from="DamageDetection" to="Health" method="_on_damage_detection_area_entered"]

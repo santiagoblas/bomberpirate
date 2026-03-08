@@ -23,13 +23,25 @@ func _take_damage(damage:int):
 
 
 func _die():
-	_ENEMY.queue_free()
+	_ENEMY._dead = true
+	%AnimationPlayer.play("die")
+	$"../CollisionShape2D".queue_free()
+	await %AnimationPlayer.animation_finished
+	%Attack.queue_free()
+	%Movement.queue_free()
+	%Sight.queue_free()
+	$"../DamageDetection".queue_free()
+	$"../FlipComponents".queue_free()
 
 
 func _on_damage_detection_area_entered(area):
-	_take_damage(1)
 	_has_control = true
+	_take_damage(1)
 	# Reproducimos la animación de daño y esperamos su finalización para volver a idle
+	
+	if _ENEMY._dead:
+		return
+	
 	%AnimationPlayer.play("hit")
 	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	await %AnimationPlayer.animation_finished

@@ -3,7 +3,7 @@ class_name CaptainMovement
 
 
 const MIN_SPEED:float = 10
-const MAX_SPEED:float = 150.0
+const MAX_SPEED:float = 60.0
 const JUMP_VELOCITY = -250.0
 
 
@@ -51,12 +51,15 @@ func _physics_process(delta):
 
 
 func _movement(delta):
+	if _CAPTAIN._dead:
+		return
+	
 	if not _CAPTAIN.is_on_floor():
 		if _speed != 0:
-			_speed -= sign(_speed) * 8
+			_speed = move_toward(_speed, 0, delta * 300)
 	
 	if _direction == 0 and _CAPTAIN.is_on_floor():
-		_speed -= sign(_speed) * 20
+		_speed = move_toward(_speed, 0, delta * 300)
 		if abs(_speed) <= MIN_SPEED:
 			_speed = 0
 		_CAPTAIN.velocity.x = _speed
@@ -64,7 +67,7 @@ func _movement(delta):
 	
 	if abs(_speed) <= MAX_SPEED or \
 	(abs(_speed) > MAX_SPEED and sign(_speed) != _direction): 
-		_speed += _direction * 15
+		_speed = move_toward(_speed, _direction * MAX_SPEED, delta * 300)
 	
 	_CAPTAIN.velocity.x = _speed
 

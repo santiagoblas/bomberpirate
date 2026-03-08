@@ -24,7 +24,15 @@ func _take_damage(damage:int):
 
 
 func _die():
-	get_parent().queue_free()
+	# _CAPTAIN._dead se utilizará para evitar que se ejecute código con el pj en ese estado
+	_CAPTAIN._dead = true
+	%AnimationPlayer.play("die")
+	# Primero esperamos que la animación se complete y luego nos deshacemos de los nodos que no vamos a necesitar más
+	await %AnimationPlayer.animation_finished
+	%Attack.queue_free()
+	$"../DamageDetection".queue_free()
+	$"../AttackArea".queue_free()
+	%Movement.queue_free()
 
 
 func _respawn():
@@ -34,12 +42,18 @@ func _respawn():
 func _on_damage_detection_area_entered(area:Area2D):
 	if area.get_collision_layer_value(11):
 		_respawn()
+	elif area.get_collision_layer_value(5):
+		_handle_enemy_collision(area.global_position)
 
 
 func _on_damage_detection_body_entered(body:PhysicsBody2D):
-	if body.get_collision_layer_value(5):
-		_take_damage(1)
-		%Movement._knockback(body.global_position)
+	if body.get_collision_layer_value(5) and body is Enemy:
+		_handle_enemy_collision(body.global_position)
+
+
+func _handle_enemy_collision(hit_position:Vector2):
+	_take_damage(1)
+	%Movement._knockback(hit_position)
 
 
 # Si cuando termina la animación tiene el control se lo quito
