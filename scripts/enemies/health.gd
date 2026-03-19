@@ -24,6 +24,7 @@ func _take_damage(damage:int):
 
 func _die():
 	_ENEMY._dead = true
+	_ENEMY.z_index = -6
 	%AnimationPlayer.play("die")
 	$"../CollisionShape2D".queue_free()
 	await %AnimationPlayer.animation_finished
@@ -34,9 +35,13 @@ func _die():
 	$"../FlipComponents".queue_free()
 
 
-func _on_damage_detection_area_entered(area):
+func _on_damage_detection_area_entered(area:Area2D):
 	_has_control = true
-	_take_damage(1)
+	
+	#HACK Esta no es ni de cerca una buena forma de hacer esto, pero es una opción que existe. Miren en el Inspector en AttackArea del capitan y de la bomba, abajo de todo está la metadata
+	var damage:int = area.get_meta("damage") if area.has_meta("damage") else 1
+	
+	_take_damage(damage)
 	# Reproducimos la animación de daño y esperamos su finalización para volver a idle
 	
 	if _ENEMY._dead:

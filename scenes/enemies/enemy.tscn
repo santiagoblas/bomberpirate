@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://gcbedhqsvfqn"]
+[gd_scene load_steps=50 format=3 uid="uid://gcbedhqsvfqn"]
 
 [ext_resource type="Script" uid="uid://dnl2tpc73puni" path="res://scripts/enemies/enemy.gd" id="1_f6y8w"]
 [ext_resource type="Texture2D" uid="uid://b4lobgojwhgq8" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/01-Idle/Idle 01.png" id="1_n7575"]
@@ -21,10 +21,14 @@
 [ext_resource type="Texture2D" uid="uid://daomauwxxunic" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/06-Anticipation/Anticipation 02.png" id="16_f6y8w"]
 [ext_resource type="Texture2D" uid="uid://c5sym47bsuk4g" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/06-Anticipation/Anticipation 03.png" id="17_y2gxb"]
 [ext_resource type="Texture2D" uid="uid://d4jalmgvnnyem" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/07-Attack/Attack 01.png" id="18_3xxyr"]
+[ext_resource type="Texture2D" uid="uid://dt6i71at8vxi5" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/10-Dead Ground/Dead Ground 01.png" id="19_cgkoq"]
 [ext_resource type="Texture2D" uid="uid://shcj74t6wtj5" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/07-Attack/Attack 02.png" id="19_xiois"]
 [ext_resource type="Texture2D" uid="uid://berygoico6spr" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/07-Attack/Attack 03.png" id="20_e4ejd"]
+[ext_resource type="Texture2D" uid="uid://dh8dlwgjyegt5" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/10-Dead Ground/Dead Ground 02.png" id="20_tee16"]
 [ext_resource type="Texture2D" uid="uid://ct56y2srffjsr" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/07-Attack/Attack 04.png" id="21_7v5dn"]
+[ext_resource type="Texture2D" uid="uid://bxr10hy2he3vn" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/10-Dead Ground/Dead Ground 03.png" id="21_t4v2h"]
 [ext_resource type="Texture2D" uid="uid://nexm1byvv0vp" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/07-Attack/Attack 05.png" id="22_8ma66"]
+[ext_resource type="Texture2D" uid="uid://cdrk4anlhkh7y" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/10-Dead Ground/Dead Ground 04.png" id="22_lirnq"]
 [ext_resource type="Script" uid="uid://dn0wbdr5obn0w" path="res://scripts/enemies/health.gd" id="24_y2gxb"]
 [ext_resource type="Texture2D" uid="uid://uctih4eab7wq" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/08-Hit/Hit 01.png" id="25_7v5dn"]
 [ext_resource type="Texture2D" uid="uid://dkv0rdokdii70" path="res://sprites/Treasure Hunters/The Crusty Crew/Sprites/Fierce Tooth/08-Hit/Hit 02.png" id="26_8ma66"]
@@ -112,6 +116,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_cgkoq"]
 resource_name = "die"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -119,10 +124,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.23333333, 0.46666667, 0.76666665),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.23333333, 0.46666667, 0.76666665, 1.0333333, 1.3, 1.5666667, 1.8666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("32_72k7o"), ExtResource("33_8jbd4"), ExtResource("34_7ob2q"), ExtResource("35_pcnli")]
+"values": [ExtResource("32_72k7o"), ExtResource("33_8jbd4"), ExtResource("34_7ob2q"), ExtResource("35_pcnli"), ExtResource("19_cgkoq"), ExtResource("20_tee16"), ExtResource("21_t4v2h"), ExtResource("22_lirnq")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false

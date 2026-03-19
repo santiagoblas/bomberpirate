@@ -2,38 +2,79 @@ extends Node
 class_name CaptainAttack
 
 
+const _PREPARE_BOMB_ANIMATION:String = "prepare_bomb"
+
+
+@export var _CAPTAIN:CaptainBoom
+
+
 var _has_control:bool = false #Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 var _can_attack:bool = true
+var _aim:Vector2 = Vector2.RIGHT
+
+
+func _process(delta):
+	# Siempre y cuando no esté atacando, actualizo aim en relación al movimiento del capitán
+	if not _has_control and %Movement._direction != 0:
+		_aim = Vector2.RIGHT * sign(%Movement._direction)
 
 
 func _input(event):
-	if _can_attack and event.is_action_pressed("attack"):
-		#Flag para el cooldown
+	var animation:String
+	var cooldown:float
+	
+	if not _can_attack:
+		return
+	
+	if event.is_action_pressed("attack"):
+		animation = "attack_1"
+		cooldown = 0.7
+	
+	# Sostener y Soltar para disparar
+	elif event.is_action_pressed("bomb_attack"):
+		animation = _PREPARE_BOMB_ANIMATION
+	elif event.is_action_released("bomb_attack"):
+		animation = "attack_bomb"
+		cooldown = 1
+		_throw_bomb()
+	
+	if animation == "":
+		return
+	
+	_has_control = true
+	%AnimationPlayer.play(animation)
+	%AnimationPlayer.animation_finished.connect(_on_animation_finished)
+	if cooldown > 0:
 		_can_attack = false
-		_has_control = true
-		
-		%AnimationPlayer.play("attack_1")
-		#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
-		%AnimationPlayer.animation_finished.connect(_on_animation_finished)
-		
-		#Cooldown para evitar ataques muy seguidos
-		$Cooldown.start()
-	pass
+		$Cooldown.start(cooldown)
 
 
-func _attack():
-	pass
+func _throw_bomb():
+	const BOMB = preload("uid://00rnslxudlp7")
+	var new_bomb:RigidBody2D = BOMB.instantiate()
+	
+	var aim:Vector2 = _aim + Vector2.UP * .6
+	
+	new_bomb.global_position = _CAPTAIN.global_position + aim * 10
+	add_child(new_bomb)
+	new_bomb.apply_central_impulse(aim * 220)
 
 
-# Esta función será llamada cuando el Timer Cooldown termine con su conteo.
-# Fue seteada con la configuración de Node (Al lado de Inspector a tu derecha)
 func _on_cooldown_timeout():
 	_can_attack = true
 
 
-# Esta función será llamada cuando el AnimationPlayer termine con su animación actual.
-# (Siempre que esté conectada a la señal)
 func _on_animation_finished(animation_name:String):
+	# Cuidado con usar siempre un string para comparar, es poco mantenible.
+	#if animation_name == "prepare_bomb":
+	if animation_name == _PREPARE_BOMB_ANIMATION:
+		return
+	
+	#HACK Aquí hacemos que el capitán vuelva a moverse si mantuvimos apretada la dirección al atacar
+	var direction:float = Input.get_axis("move_left", "move_right")
+	if direction != 0:
+		%Movement._direction = direction
+	
 	#Comentarios en 6-ATAQUE-Y-SALUD-ENEMIGO
 	_has_control = false
 	%AnimationPlayer.animation_finished.disconnect(_on_animation_finished)

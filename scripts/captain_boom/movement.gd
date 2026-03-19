@@ -9,6 +9,7 @@ const JUMP_VELOCITY = -250.0
 
 @export var _CAPTAIN:CaptainBoom
 var _direction:float = 0
+var _last_direction:float = 0
 var _speed:float = 0
 var _gravity:float = 10
 var _jumping:bool = false
@@ -22,6 +23,7 @@ func _input(event:InputEvent):
 	
 	if event.is_action("move_left") or event.is_action("move_right"):
 		_direction = Input.get_axis("move_left", "move_right")
+		_last_direction = _direction
 	
 	if event.is_action_pressed("jump") and _CAPTAIN.is_on_floor():
 		_jump()

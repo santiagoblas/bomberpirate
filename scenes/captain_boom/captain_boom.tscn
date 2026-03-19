@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://b20kwfs5k2uh4"]
+[gd_scene load_steps=57 format=3 uid="uid://b20kwfs5k2uh4"]
 
 [ext_resource type="Script" uid="uid://s44fmtv334m5" path="res://scripts/captain_boom/captain_boom.gd" id="1_l820b"]
 [ext_resource type="Script" uid="uid://uoq1qxjif0a0" path="res://scripts/captain_boom/health.gd" id="2_ch2ba"]
@@ -36,6 +36,10 @@
 [ext_resource type="Texture2D" uid="uid://dq7kfoeeiwf0t" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/07-Dead Hit/Dead Hit 02.png" id="34_ukm8a"]
 [ext_resource type="Texture2D" uid="uid://cet8s6ssjpgmb" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/07-Dead Hit/Dead Hit 04.png" id="35_f87ys"]
 [ext_resource type="Texture2D" uid="uid://djdyhqfi7nhsy" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/07-Dead Hit/Dead Hit 03.png" id="35_ukm8a"]
+[ext_resource type="Texture2D" uid="uid://csbwyvo3reypk" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/21-Throw Bomb/Throw Bomb 02.png" id="37_gadrr"]
+[ext_resource type="Texture2D" uid="uid://bw1texgmovr1s" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/21-Throw Bomb/Throw Bomb 03.png" id="38_11vsp"]
+[ext_resource type="Texture2D" uid="uid://1ktmkurbbp04" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/21-Throw Bomb/Throw Bomb 04.png" id="39_av765"]
+[ext_resource type="Texture2D" uid="uid://dqn6082omvaoj" path="res://sprites/Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/21-Throw Bomb/Throw Bomb 01.png" id="40_xyw2p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iywne"]
 height = 24.0
@@ -151,6 +155,22 @@ tracks/0/keys = {
 "values": [ExtResource("25_8vukr"), ExtResource("26_c8k5x"), ExtResource("27_4i5ab")]
 }
 
+[sub_resource type="Animation" id="Animation_g2sp5"]
+resource_name = "attack_bomb"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("37_gadrr"), ExtResource("38_11vsp"), ExtResource("39_av765")]
+}
+
 [sub_resource type="Animation" id="Animation_rhjtm"]
 resource_name = "die"
 tracks/0/type = "value"
@@ -243,6 +263,22 @@ tracks/0/keys = {
 "values": [ExtResource("13_v5u0j"), ExtResource("14_e732p"), ExtResource("15_ch2ba")]
 }
 
+[sub_resource type="Animation" id="Animation_jtljx"]
+resource_name = "prepare_bomb"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("40_xyw2p")]
+}
+
 [sub_resource type="Animation" id="Animation_g3xrm"]
 resource_name = "walk"
 length = 0.6
@@ -266,11 +302,13 @@ _data = {
 &"attack_1": SubResource("Animation_imlfy"),
 &"attack_2": SubResource("Animation_ov78u"),
 &"attack_3": SubResource("Animation_osjk3"),
+&"attack_bomb": SubResource("Animation_g2sp5"),
 &"die": SubResource("Animation_rhjtm"),
 &"fall": SubResource("Animation_ch2ba"),
 &"hit": SubResource("Animation_ukm8a"),
 &"idle": SubResource("Animation_wnhkt"),
 &"jump": SubResource("Animation_tumle"),
+&"prepare_bomb": SubResource("Animation_jtljx"),
 &"walk": SubResource("Animation_g3xrm")
 }
 
@@ -293,9 +331,10 @@ unique_name_in_owner = true
 script = ExtResource("3_g3xrm")
 _CAPTAIN = NodePath("..")
 
-[node name="Attack" type="Node" parent="."]
+[node name="Attack" type="Node" parent="." node_paths=PackedStringArray("_CAPTAIN")]
 unique_name_in_owner = true
 script = ExtResource("4_c8k5x")
+_CAPTAIN = NodePath("..")
 
 [node name="Cooldown" type="Timer" parent="Attack"]
 wait_time = 0.8
@@ -328,6 +367,7 @@ debug_color = Color(0.9401658, 1.0781288e-05, 0.6183732, 0.41960785)
 position = Vector2(21, 0)
 collision_layer = 2
 collision_mask = 0
+metadata/damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_8vukr")

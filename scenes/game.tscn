@@ -82,7 +82,7 @@ position = Vector2(573, 186)
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("6_p57ef")]
-position = Vector2(171, 273)
+position = Vector2(172, 279)
 
 [node name="Movement" parent="Enemies/Enemy" index="2"]
 _direction = 1.0
