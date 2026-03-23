@@ -23,6 +23,8 @@ func _take_damage(damage:int):
 
 
 func _die():
+	#Quitamos el enemigo del grupo de enemigos para marcar la win conditiono en la puerta
+	_ENEMY.remove_from_group("enemies")
 	_ENEMY._dead = true
 	_ENEMY.z_index = -6
 	%AnimationPlayer.play("die")

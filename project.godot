@@ -23,6 +23,10 @@ folder_colors={
 "res://sprites/": "pink"
 }
 
+[global_group]
+
+enemies=""
+
 [input]
 
 move_left={
